@@ -1,7 +1,4 @@
 #include "RegistroAluno.h"
-#include "Registro.h"
-#include "Arquivo.h"
-#include "Buffer.h"
 
 using namespace std;
 
@@ -25,6 +22,7 @@ using namespace std;
                 break;
         }
     }
+
     void RegistroAluno::unpack(Buffer buffer, Formato formato){
         switch(formato){
             case FIXO:
