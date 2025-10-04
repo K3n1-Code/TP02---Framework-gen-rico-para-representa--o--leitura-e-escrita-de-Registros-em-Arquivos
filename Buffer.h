@@ -1,3 +1,6 @@
+#include <fstream>
+#include <istream>
+#include <ostream>
 #include <string>
 #include <vector>
 using namespace std;
