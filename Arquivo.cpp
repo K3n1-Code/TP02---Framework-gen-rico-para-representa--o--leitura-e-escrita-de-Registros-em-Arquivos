@@ -13,7 +13,8 @@ template <class T> void Arquivo<T>::adicionarRegistro(T reg) {
   Buffer buffer;
   Formato formato;
   ofstream out;
-  out.open(this->nomeArquivo);
+  out.open(this->nomeArquivo, std::ios::ate);
+
   // fazer um try catch para testar a a abertura de arquivos
 
   reg.pack(buffer, formato);
@@ -31,7 +32,7 @@ template <class T> vector<T> Arquivo<T>::lerRegistros() {
   in.open(this->nomeArquivo);
   while (??) {
     T reg;
-    buffer.read(&in, 500); // Desconfie dessa implementação
+    buffer.read(in, 500); // Desconfie dessa implementação
     reg.pack(buffer, formato);
     registros.push_back();
   }
