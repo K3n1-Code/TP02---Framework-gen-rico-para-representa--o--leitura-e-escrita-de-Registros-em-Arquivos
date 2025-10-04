@@ -25,18 +25,23 @@ template <class T> void Arquivo<T>::adicionarRegistro(T reg) {
 }
 
 template <class T> vector<T> Arquivo<T>::lerRegistros() {
-  vector<T> registros;
-  Buffer buffer;
-  Formato formato;
-  ifstream in;
-  in.open(this->nomeArquivo);
-  while (??) {
-    T reg;
-    buffer.read(in, 500); // Desconfie dessa implementação
-    reg.pack(buffer, formato);
-    registros.push_back();
-  }
-  in.close();
+    vector<T> registros;
+    Buffer buffer;
+    ifstream in;
+    
+    streampos start = in.tellg();
+    in.seekg(0, ios::end);
+    long size = in.tellg();
+    in.seekg(start);
 
-  return registros;
+    in.open(this->nomeArquivo);
+    buffer.read(in, size); // Desconfie dessa implementação
+    while(buffer.ponteiro<size){
+        T reg;
+        reg.unpack(buffer, this->formato);
+        registros.push_back(reg);
+    }
+    
+    in.close();
+    return registros;
 }

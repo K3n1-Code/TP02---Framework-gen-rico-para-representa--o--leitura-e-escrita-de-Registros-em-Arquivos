@@ -3,7 +3,9 @@
 #include <ostream>
 
     void Buffer::packFixo(string str,int tamanho){
-        data.insert(data.end(), str.begin(), str.begin() + min((size_t)tamanho, str.size()));
+        data.insert(data.end(), str.begin(), str.end());
+        vector<char> aux(tamanho - str.size(), '\0');
+        data.insert(data.end(), aux.begin(), aux.end());
     }
     string Buffer::unpackFixo(int tamanho){
         string ret(reinterpret_cast<const char*>(&data[ponteiro]), tamanho);
@@ -25,11 +27,10 @@
         return ret;
     }
     void Buffer::packComprimento(string str){
-        data.insert(data.end(), str.begin(), str.end());
+        packDelimitado(str, '\n');
     }
     string Buffer::unpackComprimento(){
-        string ret(reinterpret_cast<const char*>(&data[ponteiro]), data.size() - ponteiro);
-        return ret;
+        return unpackDelimitado('\n');
     }
     void Buffer::pack(int valor){
         const int32_t* bytes = reinterpret_cast<const int32_t*>(&valor);

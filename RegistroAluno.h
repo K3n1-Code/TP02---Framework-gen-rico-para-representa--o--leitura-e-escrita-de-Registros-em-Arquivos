@@ -1,6 +1,6 @@
 #include "Registro.h"
 class RegistroAluno : public Registro {
-    private:
+    public:
     int matricula;
     string nome;
     string curso;
