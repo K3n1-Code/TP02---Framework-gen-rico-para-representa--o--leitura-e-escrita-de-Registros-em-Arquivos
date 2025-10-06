@@ -1,21 +1,22 @@
 #include "RegistroAluno.h"
+#include <iostream>
 
 using namespace std;
 
-    void RegistroAluno::pack(Buffer buffer, Formato formato){
+    void RegistroAluno::pack(Buffer &buffer, Formato formato){
+        const char delim = ';';
         switch(formato){
-            case FIXO:
+            case Formato::FIXO:
                 buffer.packFixo(nome,100);
-                buffer.packFixo(to_string(matricula),sizeof(int));
+                buffer.packFixo(to_string(matricula),sizeof(matricula));
                 buffer.packFixo(curso,5);
                 break;
-            case DELIMITADO:
-                char delim = ';';
+            case Formato::DELIMITADO:
                 buffer.packDelimitado(nome,delim);
                 buffer.packDelimitado(to_string(matricula), delim);
                 buffer.packDelimitado(curso, '\n');
                 break;
-            case COMPRIMENTO:
+            case Formato::COMPRIMENTO:
                 buffer.packComprimento(nome+"\n");
                 buffer.packComprimento(to_string(matricula)+"\n");
                 buffer.packComprimento(curso+"\n");
@@ -23,20 +24,20 @@ using namespace std;
         }
     }
 
-    void RegistroAluno::unpack(Buffer buffer, Formato formato){
+    void RegistroAluno::unpack(Buffer &buffer, Formato formato){
+        const char delim = ';';
         switch(formato){
-            case FIXO:
+            case Formato::FIXO:
                 nome = buffer.unpackFixo(100);
                 matricula = stoi(buffer.unpackFixo(sizeof(int)));
                 curso = buffer.unpackFixo(5);
                 break;
-            case DELIMITADO:
-                char delim = ';';
+            case Formato::DELIMITADO:
                 nome = buffer.unpackDelimitado(delim);
                 matricula = stoi(buffer.unpackDelimitado(delim));
                 curso = buffer.unpackDelimitado('\n');
                 break;
-            case COMPRIMENTO:
+            case Formato::COMPRIMENTO:
                 nome = buffer.unpackComprimento();
                 matricula = stoi(buffer.unpackComprimento());
                 curso = buffer.unpackComprimento();

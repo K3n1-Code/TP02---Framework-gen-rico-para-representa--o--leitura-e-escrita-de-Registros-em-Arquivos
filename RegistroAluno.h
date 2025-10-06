@@ -6,8 +6,8 @@ class RegistroAluno : public Registro {
     string curso;
 
     public:
-    void pack(Buffer buffer, Formato formato) override;
-    void unpack(Buffer buffer, Formato formato) override;
+    void pack(Buffer &buffer, Formato formato) override;
+    void unpack(Buffer &buffer, Formato formato) override;
     string getChave() override;
     int getTamanhoFixo() override;
 

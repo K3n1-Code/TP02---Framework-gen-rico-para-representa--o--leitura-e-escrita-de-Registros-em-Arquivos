@@ -1,11 +1,19 @@
 #include "Buffer.h"
 #include <istream>
 #include <ostream>
-
+#include <iostream>
+    Buffer::Buffer(int tamanho){
+        data = vector<char>(tamanho);
+        for(int k=0;k<tamanho;k++) data[k]=' ';
+        ponteiro = 0;
+    }
     void Buffer::packFixo(string str,int tamanho){
         data.insert(data.end(), str.begin(), str.end());
-        vector<char> aux(tamanho - str.size(), '\0');
-        data.insert(data.end(), aux.begin(), aux.end());
+        if(data.size()<tamanho){
+            vector<char> aux(tamanho - data.size());
+            for(int k=0;k<aux.size();k++) aux[k]=' ';
+            data.insert(data.end(), aux.begin(), aux.end());
+        }
     }
     string Buffer::unpackFixo(int tamanho){
         string ret(reinterpret_cast<const char*>(&data[ponteiro]), tamanho);
@@ -22,7 +30,7 @@
             ret += data[ponteiro++];
         }
         if (ponteiro < data.size() && data[ponteiro] == delim) {
-            ponteiro++; // Skip the delimiter
+            ponteiro++;
         }
         return ret;
     }
@@ -33,20 +41,33 @@
         return unpackDelimitado('\n');
     }
     void Buffer::pack(int valor){
-        const int32_t* bytes = reinterpret_cast<const int32_t*>(&valor);
+        const int* bytes = reinterpret_cast<const int*>(&valor);
         data.insert(data.end(), bytes, bytes + sizeof(valor));
     }
     int Buffer::unpackInt(){
-        int32_t valor;
-        std::memcpy(&valor, &data[ponteiro], sizeof(valor));
+        int valor;
+        std::wmemcpy((wchar_t*)&valor, (wchar_t*)&data[ponteiro], sizeof(valor));
         ponteiro += sizeof(valor);
         return valor;
     }
-    bool Buffer::read(istream &stream, int tamanho){
+    bool Buffer::read(istream &stream, int const tamanho){
         if (!stream.good()) return false;
-
-        data.resize(tamanho);
         stream.read(data.data(), tamanho);
+        int start,end;
+        //Removedor de cabeçalho
+        for (int k=0; k<tamanho-1; k++){
+            if(data[k]=='\n'){
+                start = k;
+                break;
+            }  
+        }
+         for (int k=data.size(); k>start; k--){
+            if(data[k]=='\n'){
+                end = data.size()-k;
+                break;
+            }  
+        }
+        data= vector<char>(data.begin()+start+1,data.end()-end-1);
         ponteiro = 0;
 
         return stream.good();

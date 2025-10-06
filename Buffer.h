@@ -1,3 +1,6 @@
+#ifndef BUFFER_H
+#define BUFFER_H
+
 #include <fstream>
 #include <istream>
 #include <ostream>
@@ -6,11 +9,10 @@
 using namespace std;
 
 class Buffer {
-private:
+public:
   vector<char> data;
   int ponteiro;
-
-public:
+  Buffer(int tamanho);
   void packFixo(string str, int tamanho);
   string unpackFixo(int tamanho);
   void packDelimitado(string str, char delim);
@@ -23,3 +25,5 @@ public:
   void write(ostream &stream);
   void clear();
 };
+
+#endif // BUFFER_H
