@@ -2,6 +2,8 @@
 #include <istream>
 #include <ostream>
 #include <iostream>
+#include <fstream>
+
     Buffer::Buffer(int tamanho){
         data = vector<char>(tamanho);
         for(int k=0;k<tamanho;k++) data[k]=' ';
@@ -21,7 +23,7 @@
         return ret;
     }
     void Buffer::packDelimitado(string str,char delim){
-        string subs = str.substr(0, str.find(delim));
+        string subs = str+delim;
         data.insert(data.end(), subs.begin(), subs.end());
     }
     string Buffer::unpackDelimitado(char delim){
@@ -73,13 +75,8 @@
         return stream.good();
     }
     void Buffer::write(ostream &stream){
-        if (!stream.good()) return;
-        
-        size_t size = data.size();
-        stream.write(reinterpret_cast<const char*>(&size), sizeof(size));
-        
-        if (size > 0) {
-            stream.write(reinterpret_cast<const char*>(data.data()), size);
+        for(char c: data){
+            stream <<c;
         }
     }
     void Buffer::clear(){

@@ -10,6 +10,7 @@ using namespace std;
                 buffer.packFixo(nome,100);
                 buffer.packFixo(to_string(matricula),sizeof(matricula));
                 buffer.packFixo(curso,5);
+                buffer.packFixo("\n",1);
                 break;
             case Formato::DELIMITADO:
                 buffer.packDelimitado(nome,delim);
@@ -17,9 +18,9 @@ using namespace std;
                 buffer.packDelimitado(curso, '\n');
                 break;
             case Formato::COMPRIMENTO:
-                buffer.packComprimento(nome+"\n");
-                buffer.packComprimento(to_string(matricula)+"\n");
-                buffer.packComprimento(curso+"\n");
+                buffer.packComprimento(nome);
+                buffer.packComprimento(to_string(matricula));
+                buffer.packComprimento(curso);
                 break;
         }
     }

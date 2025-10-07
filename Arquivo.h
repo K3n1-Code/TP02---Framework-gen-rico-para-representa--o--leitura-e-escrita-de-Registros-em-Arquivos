@@ -1,6 +1,8 @@
 #include "Registro.h"
 #include <iostream>
 #include <string>
+#include <filesystem>
+#include <fstream>
 
 template <class T> class Arquivo {
 private:
@@ -23,6 +25,24 @@ public:
     ofstream out;
     out.open(this->nomeArquivo, std::ios::app);
     reg.pack(buffer, this->formato);
+    
+    streampos currentPos = out.tellp();
+    string header;
+    switch(this->formato){
+        case Formato::FIXO:
+            header ="Nome Matricula CUR";
+            break;
+        case Formato::DELIMITADO:
+            header ="Nome;Matricula;Curso";
+            break;
+        case Formato::COMPRIMENTO:
+            header ="Nome Matricula Curso";
+            break;
+    }
+
+    if (filesystem::file_size(this->nomeArquivo)==0) {
+      out << header << endl;
+    }
 
     buffer.write(out);
     out.close();

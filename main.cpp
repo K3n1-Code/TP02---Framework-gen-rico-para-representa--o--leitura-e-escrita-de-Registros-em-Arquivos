@@ -41,6 +41,7 @@ int main(){
     alunos = file_comprimento.lerRegistros();
     Arquivo<RegistroAluno> file_comprimento_2("dados_comprimento_2.csv",Formato::COMPRIMENTO);
     */
+
     cout<<"programa finalizado."<<endl;
     return 0;
 }
