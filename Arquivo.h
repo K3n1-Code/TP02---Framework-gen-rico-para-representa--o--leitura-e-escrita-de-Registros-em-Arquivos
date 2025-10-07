@@ -58,7 +58,6 @@ public:
     Buffer buffer = Buffer(size);
     buffer.read(in, size); // Desconfie dessa implementação
     in.close();
-    cout << size;
     while (buffer.ponteiro < buffer.data.size()) {
       T reg;
       reg.unpack(buffer, this->formato);

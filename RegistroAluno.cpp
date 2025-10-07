@@ -8,7 +8,7 @@ using namespace std;
         switch(formato){
             case Formato::FIXO:
                 buffer.packFixo(nome,100);
-                buffer.packFixo(to_string(matricula),sizeof(matricula));
+                buffer.packFixo(to_string(matricula),16);
                 buffer.packFixo(curso,5);
                 buffer.packFixo("\n",1);
                 break;
@@ -30,8 +30,9 @@ using namespace std;
         switch(formato){
             case Formato::FIXO:
                 nome = buffer.unpackFixo(100);
-                matricula = stoi(buffer.unpackFixo(sizeof(int)));
+                matricula = stoi(buffer.unpackFixo(16));
                 curso = buffer.unpackFixo(5);
+                buffer.ponteiro++;
                 break;
             case Formato::DELIMITADO:
                 nome = buffer.unpackDelimitado(delim);
@@ -48,4 +49,4 @@ using namespace std;
     string RegistroAluno::getChave(){
         //???
     }
-    int RegistroAluno::getTamanhoFixo(){return 105+sizeof(int);}
+    int RegistroAluno::getTamanhoFixo(){return 121;}

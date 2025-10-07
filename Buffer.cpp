@@ -11,14 +11,14 @@
     }
     void Buffer::packFixo(string str,int tamanho){
         data.insert(data.end(), str.begin(), str.end());
-        if(data.size()<tamanho){
-            vector<char> aux(tamanho - data.size());
+        if(str.size()<tamanho){
+            vector<char> aux(tamanho - str.size());
             for(int k=0;k<aux.size();k++) aux[k]=' ';
             data.insert(data.end(), aux.begin(), aux.end());
         }
     }
     string Buffer::unpackFixo(int tamanho){
-        string ret(reinterpret_cast<const char*>(&data[ponteiro]), tamanho);
+        string ret((&data[ponteiro]), tamanho);
         ponteiro += tamanho;
         return ret;
     }

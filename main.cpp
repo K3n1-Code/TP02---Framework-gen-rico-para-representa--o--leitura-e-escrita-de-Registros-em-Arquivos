@@ -17,30 +17,30 @@ int main(){
 
     int k=0;
     for(auto aluno:alunos){
-        cout<<"Nome: "<<aluno.nome<<endl;
-        cout<<"Matricula: "<<aluno.matricula<<endl;
-        cout<<"Curso: "<<aluno.curso<<endl;
-        cout<<++k<<endl;
-        cout<<"--------------------"<<endl;
         file_fixo.adicionarRegistro(aluno);
         file_delimitado.adicionarRegistro(aluno);
         file_comprimento.adicionarRegistro(aluno);
     }
     cout<<"Registros escritos em arquivos de formatos diferentes."<<endl;
     
-    /*
+    cout<<"Lendo registros do arquivo de formato fixo:"<<endl;
     alunos.clear();
     alunos = file_fixo.lerRegistros();
-    Arquivo<RegistroAluno> file_fixo_2("dados_fixo_2.csv",Formato::FIXO);
-
+    for(RegistroAluno aluno:alunos){
+        cout<<aluno.nome<<"|"<<aluno.matricula<<"|"<<aluno.curso<<endl;
+    }
+    cout<<"Lendo registros do arquivo de formato delimitado:"<<endl;
     alunos.clear();
     alunos = file_delimitado.lerRegistros();
-    Arquivo<RegistroAluno> file_delimitado_2("dados_delimitado_2.csv",Formato::DELIMITADO);
-
+    for(RegistroAluno aluno:alunos){
+        cout<<aluno.nome<<"|"<<aluno.matricula<<"|"<<aluno.curso<<endl;
+    }
+    cout<<"Lendo registros do arquivo de formato comprimento:"<<endl;
     alunos.clear();
     alunos = file_comprimento.lerRegistros();
-    Arquivo<RegistroAluno> file_comprimento_2("dados_comprimento_2.csv",Formato::COMPRIMENTO);
-    */
+    for(RegistroAluno aluno:alunos){
+        cout<<aluno.nome<<"|"<<aluno.matricula<<"|"<<aluno.curso<<endl;
+    }
 
     cout<<"programa finalizado."<<endl;
     return 0;
