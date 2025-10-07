@@ -63,7 +63,7 @@
                 break;
             }  
         }
-         for (int k=data.size(); k>start; k--){
+         for (int k=data.size()-1; k>start; k--){
             if(data[k]=='\n'){
                 end = data.size()-k;
                 break;
